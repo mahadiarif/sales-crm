@@ -24,7 +24,7 @@ class QuarterlySalesReport extends Component
         $this->year = date('Y');
         
         // Fetch years from sales for the filter
-        $this->availableYears = Sale::selectRaw('YEAR(created_at) as year')
+        $this->availableYears = Sale::selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->distinct()
             ->orderBy('year', 'desc')
             ->pluck('year')
@@ -192,7 +192,7 @@ class QuarterlySalesReport extends Component
             };
 
             $sales = Sale::whereYear('created_at', $this->year)
-                ->whereRaw('MONTH(created_at) IN (' . implode(',', $months) . ')');
+                ->whereRaw('EXTRACT(MONTH FROM created_at) IN (' . implode(',', $months) . ')');
             
             if ($this->userId) {
                 $sales->where('user_id', $this->userId);
