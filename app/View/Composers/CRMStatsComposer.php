@@ -119,7 +119,7 @@ class CRMStatsComposer
             ->leftJoin('service_packages as sp_lead', 'leads.service_package_id', '=', 'sp_lead.id')
             ->select(
                 'services.name as product',
-                DB::raw('COALESCE(sp_sale.name, sp_lead.name, "-") as package'),
+                DB::raw("COALESCE(sp_sale.name, sp_lead.name, '-') as package"),
                 DB::raw('SUM(sales.amount) as total_sales')
             )
             ->whereMonth('sales.closed_at', Carbon::now()->month)

@@ -92,7 +92,7 @@ class AnalyticsService
     public function getMonthlyRevenueTrend(): array
     {
         return Sale::accessible()
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, SUM(amount) as revenue")
+            ->selectRaw("TO_CHAR(created_at, 'YYYY-MM') as month, SUM(amount) as revenue")
             ->where('created_at', '>=', Carbon::now()->subMonths(12))
             ->groupBy('month')
             ->orderBy('month')

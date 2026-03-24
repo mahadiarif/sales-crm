@@ -627,7 +627,7 @@ class ReportController extends Controller
             };
 
             $salesQuery = Sale::whereYear('created_at', $year)
-                ->whereIn(\DB::raw('MONTH(created_at)'), $months);
+                ->whereIn(\DB::raw('EXTRACT(MONTH FROM created_at)'), $months);
             
             if ($userId) {
                 $salesQuery->where('user_id', $userId);
